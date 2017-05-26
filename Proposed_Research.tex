@@ -1,4 +1,4 @@
-	\documentclass[10pt]{article}
+\documentclass[10pt]{article}
 \usepackage{makeidx}
 \usepackage{multirow}
 \usepackage{multicol}
@@ -18,13 +18,11 @@
 
 \begin{document}
 
-\noindent \textbf{PROPOSED RESEARCH: }
+\noindent \textbf{PROPOSED RESEARCH:}
 
 \noindent \textbf{}
 
-{\raggedright
-
-\vspace{3pt} \noindent
+{\raggedright\vspace{3pt} \noindent
 \begin{tabular}{|p{514pt}|}
 \hline
 \parbox{514pt} {\raggedright  \vspace{3pt}
@@ -56,7 +54,8 @@ Often, text data is structured in digital collections of documents whose length 
 There exist three approaches successfully applied to the construction of clustering algorithms capable of processing large volumes of data. The first one introduces constraints on the number of passes allowed on a document (related to the amount of time it is loaded into main memory). The second one exploits current multi-core architectures to perform parallel processing of the data, which does not solve the massive volume problem. The last one combines the computational power of a single machine together with the scalable storage capability of a distributed system by partitioning the dataset into several independent machines connected through a network.
 
 %Esta última línea de trabajo es promisoria dado que permite aprovechar las capacidades locales de computadores que no necesariamente deben ser servidores de gran escala con múltiples procesadores. Dentro de este enfoque existen dos contextos respecto del origen de los datos que deben ser diferenciados. Por una parte, existen problemas donde la estrategia usada para hacer frente al gran volúmen de datos consiste en distribuirlo entre distintos computadores, lo que conlleva un traslado de datos durante la ejecución del algoritmo \cite{N15}. Por otra parte, existe otro contexto en el que los datos se encuentran naturalmente distribuídos, e.g. colecciones documentales locales a distintas zonas geográficas, y donde además no es posible  centralizarlos, debido a costos de transmisión o por motivos de privacidad \cite{JW05,LHLX12}.
-The last above mentioned approach seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. On the one hand, in some problems where the dataset is large but collected in a centralized fashion, the strategy employed consists in partitioning the collection into several machines or nodes of a network. This scheme leads to the transmission of a lot of data during the execution of the algorithm \cite{N15}. On the other hand, there are some problems where the data is generated in a distributed fashion and where besides it is not feasible to centralize the data because of high transmission costs or privacy issues \cite{JW05,LHLX12}, e.g. search engines  work with document collections originated and stored in different geographical locations.
+The last above mentioned approach seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. On the one hand, in some problems where the dataset is large but collected in a centralized fashion, the strategy employed consists in partitioning the collection into several
+machines or nodes of a network. This scheme leads to the transmission of a lot of data during the execution of the algorithm \cite{N15}. On the other hand, there are some problems where the data is generated in a distributed fashion and where besides it is not feasible to centralize the data because of high transmission costs or privacy issues \cite{JW05,LHLX12}, e.g.\  search engines  work with document collections originated and stored in different geographical locations.
 
 
 
@@ -67,13 +66,15 @@ Let $X=\{X_1,X_2,\ldots ,X_p\}$ be a collection of documents where\(\bigcup_{i=1
 %La tarea de Clustering distribuído consiste en obtener un conjunto de $k$ particiones \(C_1,C_2\ldots,C_k\) donde \(\bigcup_{i=1}^k C_i=X\) y además \(\forall i\neq j \in [1,\ldots ,k], C_i\cap C_j=\emptyset\), tal que cada una de ellas represente una o una parte de una categoría temática de la colección completa y a su vez todas las categorías esten representadas en los grupos o clusters $C_i$. Expresado de una manera distinta, esto significa que cada cluster contiene documentos más similares entre sí según su contenido que los que están en otros clusters.
 The distributed data clustering task consists in obtaining $k$ data partitions \(C_1,C_2\ldots,C_k\) where \(\bigcup_{i=1}^k C_i=X\) and also \(\forall i\neq j \in [1,\ldots ,k], C_i\cap C_j=\emptyset\), such that each one of them represents a topical category of the overall collection and in turn all the categories are covered by the partitions or clusters $C_i$. Expressed in a different manner, this means that every cluster contains more similar documents according to their content in comparison to the other ones contained in different clusters.
 %La similaridad entre vectores respresentates de documentos es usualmente medida mediante una función $S:\mathbb{R}^d\times \mathbb{R}^d\rightarrow[0,1]$ como por ejemplo la denominada similaridad del coseno:\[S(x_a,y_b)=\frac{<x_a,x_b>}{\|x_a||x_b|}\], donde $<u,v>$ con $u,v\in\mathbb{R}^d$ denota el producto interno entre dos vectores y $|u|$ es la norma euclideana del vector.
-The similarity between document vectors is usually measured by means of a function $S:\mathbb{R}^d\times \mathbb{R}^d\rightarrow[0,1]$, e.g. the cosine similarity function: \[S(x_a,y_b)=\frac{<x_a,x_b>}{\|x_a||x_b|}\], where $<u,v>$ with $u,v\in\mathbb{R}^d$ denotes the inner product between two vectors and $|u|$ corresponds to the Euclidean norm of a vector.
+The similarity between document vectors is usually measured by means of a function $S:\mathbb{R}^d\times \mathbb{R}^d\rightarrow[0,1]$, e.g.\  the cosine similarity function: \[S(x_a,y_b)=\frac{<x_a,x_b>}{\|x_a||x_b|}\], where $<u,v>$ with $u,v\in\mathbb{R}^d$ denotes the inner product between two vectors and $|u|$ corresponds to the Euclidean norm of a vector.
 %En pocas palabras, esta tarea consiste en encontrar una estructura de grupos compactos respecto a la similaridad entre sus miembros y homogéneos respecto de su contenido, de acuerdo a alguna medida de similitud como puede ser la del coseno.
 In a nutshell, this task consists in finding a structure of compact and homogeneous groups with respect to a similarity value between their members that accounts for their content. 
 
 %El modo general de operación de las técnicas de clustering sobre colecciones de datos distribuídas consiste de cuatro etapas: Inicialmente el conjunto de datos se encuentra particionado en varios nodos. Luego cada nodo genera un modelo de agrupamiento sobre su respectivo subconjunto local. Estos modelos son transmitidos a un nodo central (e.g. puede ser un conjunto de representantes identificados en cada grupo), el cual combina los modelos locales en una solución global. Opcionalmente, el modelo global puede ser transmitido a los otros nodos para que estos refinen sus modelos locales y se genere un nuevo modelo global depurado siguiendo las mismas etapas ya mencionadas. Este esquema se representa gráficamente en la figura
-An overall operation mode of the distributed data clustering techniques consists of four stages: Initially, the dataset is partitioned into several nodes. Next, each node generates a clustering model over its corresponding local subset. These local models are then transmitted to a central node (e.g. A model can consists of representative points identified from a local clustering), which integrates the local models in a global solution. Eventually, this global model can be re-transmitted to the other nodes in order to refine their local models and then, by performing the same previous steps, a new depurated global model is built. This scheme is depicted in the following figure:
-\ref{fig:distributed_clustering}.
+An overall operation mode of the distributed data clustering techniques consists of four stages: Initially, the dataset is partitioned into several nodes. Next, each node generates a clustering model over its corresponding local subset. These local models are then transmitted to a central node (e.g.\ A model can consists of representative points identified from a local clustering), which integrates the local models in a global solution. Eventually, this global model can be re-transmitted to the 
+other nodes in order to refine their local models and then, by performing the same previous steps, a new depurated 
+global model is built. This scheme is depicted in Figure~\ref{fig:distributed_clustering}.
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\textwidth]{distributed_data_clustering_scheme_en.png}
@@ -123,7 +124,7 @@ Several years later, \cite{LBK13} present another algorithm for principal compon
 %\cite{FZ00} extienden esquemas paralelos basados en centroides para soportar la identificación de grupos sobre datos distribuídos. Específicamente extienden K-Means, K-Harmonic-Means y EM.
 \cite{FZ00} extend centroid based techniques to identify groups over distributed data. Specifically, they extend K-Means, K-Harmonic-Means and EM.
 %\cite{ZLW08} proponen una técnica para la construcción de K-Medianas aproximadas sobre datos distribuidos en el escenario de streaming en que los datos se reciben de manera continua.
-\cite{ZLW08} propose an approximate K-Median clustering technique that works over stresaming data, i.e. data is continuously collected. 
+\cite{ZLW08} propose an approximate K-Median clustering technique that works over stresaming data, i.e.\ data is continuously collected. 
 %\cite{BEL13} presentan técnicas de clustering basadas en centroides para datos distribuídos. Para esto proponen un método de construcción de coresets sobre datos distribuidos para K-Medias y K-Medianas.
 \cite{BEL13} address the distributed clustering problem by using centroid based techniques that use a novel coreset construction method that works for distributed data.
 %\cite{NC14} utilizan algoritmos evolutivos para solucionar dos problemas de K-Medias sobre datos distribuidos: La selección de prototipos iniciales y la identificación de la cantidad de clusters.
@@ -150,7 +151,7 @@ The general aim of this work consists in developing new parallel clustering tech
 Additionally, this work comprises the following specific objectives:
 \begin{itemize}
 %\item Desarrollar un esquema paralelo agrupamiento de documentos que realice sólo una pasada sobre la colección documental, i.e. no utilice memoria secundaria para procesar la colección de documentos.
-\item To develop parallel clustering scheme for document collections that also performs a single-pass over each document, i.e. access to secondary memory during the algorithm execution is restricted.
+\item To develop parallel clustering scheme for document collections that also performs a single-pass over each document, i.e.\  access to secondary memory during the algorithm execution is restricted.
 %\item Extender el esquema paralelo propuesto para entornos donde la colección de documentos se encuentra distribuida en varias máquinas.
 \item To extend the parallel scheme proposed to environments where the document collection is distributed into several machines.
 %\item Validar los modelos propuestos tanto con datos de benchmark extraídos de sitios especializados, como con conjuntos de documentos reales (Noticias y textos de redes sociales).
@@ -163,26 +164,36 @@ Additionally, this work comprises the following specific objectives:
 %\section{Metodología}
 \section{Methodology}\label{sec:metodology}
 %Para alcanzar las metas de esta propuesta, distinguimos las siguientes actividades generales y específicas:
-In order to acomplish the goals of this project the following activities are distinguished:
+In order to acomplish the goals of this project the following general and specific activities are distinguished:
 \begin{enumerate}
-\item Estudio y Discusión de la Literatura relevante a la propuesta
-En el desarrollo de esta investigación se realizará una revisión completa y constante de la literatura relacionada con: 
-\begin{itemize}
-\item Problemas teóricos y experimentales de agrupamiento de una pasada y paralelo sobre datos distribuidos. 
-\item Revisión de trabajos de Clustering, tanto paralelos y distribuidos, 
-\item Revisión de trabajos relacionados con estrategias de Hashing para estimación de vecindarios ya sea centralizados o distribuidos, 
-\item Estudio de algoritmos de clustering para datos masivos y 
-\item Revisión de trabajos relacionados con Computación Distribuída y Paralela.
-\item Se realizará un Seminario sobre técnicas de clustering y aplicaciones sobre problemas específicos de aprendizaje distribuido, Big Data, métodos de ensamblado, con colegas y estudiantes. Este seminario incluirá discusiones con alumnos de pre y post grado.
-\item Participación en conferencias nacionales e internacionales relacionadas con máquinas de aprendizaje,  sistemas inteligentes distribuidos y descubrimiento de conocimiento desde grandes bases de datos.
-\item Se mantendrá contacto con especialistas internacionales de temas de investigación relacionados, ya sea tanto del medio nacional, latinoamericano, como de Europa y América del norte.
-\end{itemize}
+%\item Estudio y Discusión de la Literatura relevante a la propuesta
+%En el desarrollo de esta investigación se realizará una revisión completa y constante de la literatura relacionada con: 
+    \item Study and discussion of the state of the art literature. Specifically, a constant and complete revision of the literature related to:
+        \begin{itemize}
+            %\item Revisión de trabajos de Clustering, tanto paralelos y distribuidos, 
+            \item Parallel and distributed Clustering methods.
+            %\item Problemas teóricos y experimentales de agrupamiento de una pasada y paralelo sobre datos distribuidos. 
+            \item Theoretical and experimental aspects involved in the single-pass and parallel clustering methods for distributed data. 
+            %\item Revisión de trabajos relacionados con estrategias de Hashing para estimación de vecindarios ya sea centralizados o distribuidos, 
+            \item Hashing strategies for the efficient estimation of neighborhood over centralized and distributed data collections.
+            %\item Estudio de algoritmos de clustering para datos masivos y 
+            \item Clustering methods for massive data collections.
+            %\item Revisión de trabajos relacionados con Computación Distribuída y Paralela.
+            \item Distributed and parallel Machine Learning algorithms.
+        \end{itemize}
+    \item Colaboration and dissemination activities:
+        \begin{itemize}
+            %\item Se realizará un Seminario sobre técnicas de clustering y aplicaciones sobre problemas específicos de aprendizaje distribuido, Big Data, métodos de ensamblado, con colegas y estudiantes. Este seminario incluirá discusiones con alumnos de pre y post grado.
+            \item Seminar about Clustering and Non-Supervised methods and their applications over problems involving  distributed and massive data collections. Researchers, practitioners and students (undergraduate and postgraduate) will be included. 
+            \item Participación en conferencias nacionales e internacionales relacionadas con máquinas de aprendizaje,  sistemas inteligentes distribuidos y descubrimiento de conocimiento desde grandes bases de datos.
+            \item Se mantendrá contacto con especialistas internacionales de temas de investigación relacionados, ya sea tanto del medio nacional, latinoamericano, como de Europa y América del norte.
+        \end{itemize}
 \item Diseño de los algoritmos y modelo propuestos.
 Basado en la hipótesis de la propuesta reconocemos los siguientes pasos en la formulación y diseño de los modelos de la propuesta:
 \begin{itemize}
 \item Modelamiento de ambientes donde existan datos distribuidos altamente dimensionales.
 \item Construcción de los modelos propuestos: Desarrollo de un enfoque de procesamiento distribuido para algoritmos de Clustering de una sola pasada capaces de operar en escenarios donde los conjuntos de datos son representados por vectores altamente dimensionales y se encuentran naturalmente distribuidos.
-\item Estudio de como resumir o sintetizar volúmenes masivos de datos con el objetivo de generar representaciones computacionales económicas (e.g. coresets o minwise signatures).
+\item Estudio de como resumir o sintetizar volúmenes masivos de datos con el objetivo de generar representaciones computacionales económicas (e.g.\ coresets o minwise signatures).
 \item Descripción de las propiedades teóricas de los modelos: Durante esta fase nos enfocaremos en la generación de conocimiento centralizado a partir de modelos locales de Clustering.
 \end{itemize}
 \item Implementación y Optimización de los Algoritmos Propuestos
@@ -202,7 +213,7 @@ La etapa de validación será realizada mediante la corrida de 20 experimentos c
 \section{Plan de Trabajo}
 %MODIFICAR (HACER CALZAR CON OBJETIVOS)
 %The stages were explained in the Methodology section and are the following:
-Las etapas fueron descritas en el punto \ref{sec:metodology} y son las siguientes:
+Las etapas fueron descritas en el punto~\ref{sec:metodology} y son las siguientes:
 \begin{itemize}
 \item \textit{Etapa 1}: Estudio y discusión de la literatura relevante para la propuesta.%Study and Discussion of the relevant literature for the proposal.
 \item \textit{Etapa 2}: Dise\~no de los modelos y algoritmos propuestos:%Design of the proposed models and algorithms: 
