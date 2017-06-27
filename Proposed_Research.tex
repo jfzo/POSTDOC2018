@@ -209,31 +209,37 @@ In order to acomplish the goals of this project the following general and specif
 \end{itemize}
 %\item Implementación y Optimización de los Algoritmos Propuestos
 %Los algoritmos propuestos serán implementados en un nuevo lenguaje llamado JULIA (http://www.julialang.org). Desarrollaremos una estrategia compuesta de módulos capaces de ser evaluados e intercambiados independientemente. Durante esta fase de desarrollo, identificamos los siguientes pasos (los cuales pueden ser iterados): a) Construcción de una plataforma general para construir la arquitectura de los prototipos, b) Implementación de diversos escenarios distribuidos, c) Implementación de algoritmos del estado del arte con fines comparativos, d) Implementación de las técnicas de validación, e) Elaboración de soporte para clusters y tecnologías de Cloud Computing tales como MPI, OpenStack y Amazon EC2, con el fin de simular el problema en un ambiente real.
-\item During the development of the algorithm implementations we identified the following steps: a) Construction of a modular framework adequately general to serve as a basis for the posterior construction of the proposal and its variants. b) The implementation and testing of several distributed scenarios (e.g. Balanced and Imbalance load in workers, arrival of new instances and its posterior labeling and the incorporation of concept-drift by introducing new classes to the algorithm). c) Implementation and evaluation of baseline algorithms of the state of the art (e.g. Spark-Kmeans, Spark-DBSCAN and RACHET).
+\item During the development of the algorithm implementations we identified the following steps: a) Construction of a modular framework adequately general to serve as a basis for the posterior construction of the proposal and its variants. b) The implementation and testing of several distributed scenarios (e.g. Balanced and Imbalance load in workers, arrival of new instances and its posterior labeling and the incorporation of concept-drift by introducing new classes to the algorithm). c) Implementation and evaluation of baseline algorithms of the state of the art (e.g. Spark-Kmeans, Spark-DBSCAN and RACHET [\cite{SOGM02}]).%TODO: AGREGAR RACHET AL ESTADO DEL ARTE
 
 %\item Diseño de los experimentos y validación de los algoritmos propuestos.
 %Para validar los modelos propuestos, tenemos planificado usar tanto datos “benchmark” conocidos en el área, como datos provenientes de problemas reales de interés regional. Los datos de “benchmark” serán recolectados de sitios web de acceso publico del área de Máquinas de Aprendizaje. En la mayoría de los casos, los conjuntos de datos tienen asociada a cada documento una etiqueta que indica su verdadera clase. A las medidas de evaluación que comparan las etiquetas asignadas por el método de clustering con las verdaderas se les denomina medidas externas. Las medidas externas que usaremos con el fin de validar la propuesta son: Rand Score, Mutual Information, Homogeneity, Completeness y V-Measure. Para aquellos conjuntos de datos que no cuenten con etiquetas verdaderas, se usará la medida interna Silhouette \cite{R87}, la cual cuantifica que tan bien diferenciados están los grupos encontrados por el método bajo evaluación.
 %La etapa de validación será realizada mediante la corrida de 20 experimentos con particionamientos aleatorios para cada uno de los conjuntos de datos utilizados. Los métodos propuestos serán comparados con modelos del estado del arte en al menos 10 conjuntos de datos, tanto reales como sintéticos obtenidos de dos fuentes:
-\begin{itemize}
-\item UCI Machine Learning Repository (http://archive.ics.uci.edu/ml/) el cual es el repositorio más extenso de datos usados en Machine Learning, 
-\item Datos provenientes de bases de datos documentales como Tipster y 20-Newsgroups.
-\end{itemize}
+\item Design of the experiments and validation of the proposed algorithms. 
+In order to validate the proposed techniques, we plan to use benchmark datasets coming from several sources; namely, the UCI machine learning repository\footnote{\url{https://catalog.ldc.upenn.edu/LDC93T3A}}, the Tipster text collection\footnote{\url{https://catalog.ldc.upenn.edu/LDC93T3A}} and the GOV2 text collection\footnote{\url{http://ir.dcs.gla.ac.uk/test_collections/gov2-summary.htm}}. 
+In some cases the document set is labeled or at least some labels can be inferred from relevance judges (e.g. the Tipster collection), and in some other no label information is available (e.g. GOV2 collection).
+ There exist several measures for the quantification of clustering quality. When labeling information is available external measures such as V-measure [\cite{RH07}] and Adjusted Rand Index [\cite{HA85}] are applied. 
+In the absence of this information, internal measures such as the Silhouette [\cite{R87}] coefficient and CVNN [\cite{LLXGWW13}] are utilized.
+As the partitioning of the data is performed at random, the validation will be conducted by executing 20 runs over each dataset. Then, the average and standard deviation of each attained quality measure will be reported.
 
-\item Empirical validation of the proposed algorithms. As the empirical evaluation is conducted by using 
 \end{enumerate}
 
-%\section{Work Plan}
-\section{Plan de Trabajo}
+\section{Work Plan}
+%\section{Plan de Trabajo}
 %MODIFICAR (HACER CALZAR CON OBJETIVOS)
-%The stages were explained in the Methodology section and are the following:
-Las etapas fueron descritas en el punto~\ref{sec:metodology} y son las siguientes:
+The stages were explained in the Methodology section and are the following:
+%Las etapas fueron descritas en el punto~\ref{sec:metodology} y son las siguientes:
 \begin{itemize}
-\item \textit{Etapa 1}: Estudio y discusión de la literatura relevante para la propuesta.%Study and Discussion of the relevant literature for the proposal.
-\item \textit{Etapa 2}: Dise\~no de los modelos y algoritmos propuestos:%Design of the proposed models and algorithms: 
+\item \textit{Stage 1}: %Estudio y discusión de la literatura relevante para la propuesta.
+Study and Discussion of the relevant literature for the proposal.
+\item \textit{Stage 2}: %Dise\~no de los modelos y algoritmos propuestos:
+Design of the proposed models and algorithms: 
 \begin{enumerate}
-\item Modelamiento de ambientes con patrones distribuidos.
-\item Construcción de los modelos propuestos.
-\item Descripción teórica de las capacidades y propiedades de los modelos. 
+\item %Modelamiento de ambientes con patrones distribuidos.
+Design of a processing strategy for distributed data clustering.
+\item %Construcción de los modelos propuestos.
+Implementation of the proposed scheme.
+\item %Descripción teórica de las capacidades y propiedades de los modelos.
+Theoretical discussion about the scalability of the proposal in terms of algorithmic complexity (time and space).
 %(3.1) Modelling environments with distributed patterns, with hybrid fragmentation. (3.2) Modelling non-stationary environments with large distributed sources, with the aforementioned fragmentation type. (3.3) Construction of the proposed models. (3.4) Description of the theoretical capabilities and properties of the models.
 \end{enumerate}
 \item \textit{Etapa 3}: Implementación y optimización de los algoritmos propuestos.%Implementation and Optimization of the proposed algorithms
@@ -344,6 +350,11 @@ Han, J., Pei, J., and Kamber, M. (2011).
 \newblock {\em Data mining: concepts and techniques}.
 \newblock Elsevier.
 
+\bibitem[Hubert and Arabie, 1985]{HA85}
+Hubert, L. and Arabie, P. (1985).
+\newblock {Comparing partitions}.
+\newblock {\em Journal of Classification}, 2:1, 193--218, Springer.
+
 \bibitem[Jagannathan et~al., 2005]{JW05}
 Jagannathan, G., and Wright, R. N. (2005).
 \newblock {Privacy-preserving Distributed K-means Clustering over Arbitrarily Partitioned Data}.
@@ -402,6 +413,10 @@ Liu, J., Huang, J. Z., Luo, J., and Xiong, L. (2012).
 \newblock {Privacy Preserving Distributed DBSCAN Clustering}.
 \newblock {\em Proceedings of the 2012 Joint EDBT/ICDT Workshops}, 177--185.
 
+\bibitem[Liu et~al., 2013]{LLXGWW13}
+Liu, Y., and Li, Z.m and Xiong, H., and Gao, X., and Wu, J., and Wu, S. (2013).
+\newblock {Understanding and Enhancement of Internal Clustering Validation Measures}. 
+\newblock {\em IEEE Transactions on Cybernetics}, 43:3, pp. 982--994, June 2013.
 
 \bibitem[Merugu and Ghosh, 2003]{MG03}
 Merugu, S. and Ghosh, J. (2003).
@@ -425,10 +440,22 @@ Qi, Z., Jinze, L., and Wei, W. (2008).
 \newblock {\em Proceedings - International Conference on Data Engineering},
   00:1131--1139.
 
+\bibitem[Rosenberg and Hirschberg, 2007]{RH07}
+Rosenberg, A. and Hirschberg, J. (2007).
+\newblock {V-Measure: A Conditional Entropy-Based External Cluster Evaluation Measure.}.
+\newblock {\em Proceedings of Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (EMNLP-CoNLL)}, 7:410--420.
+
+
 \bibitem[Rousseeuw, 1987]{R87}
 Rousseeuw Peter J. (1987). 
 \newblock {Silhouettes: A graphical aid to the interpretation and validation of cluster analysis}.
 \newblock {\em Journal of Computational and Applied Mathematics}, 20:53--65.
+
+\bibitem[Samatova et~al., 2002]{SOGM02}
+Samatova, N. F. and Ostrouchov, G. and Geist, A. and Melechko, A. V. (2002).
+\newblock{RACHET: An Efficient Cover-Based Merging of Clustering Hierarchies from Distributed Datasets}.
+\newblock{Journal of Distributed and Parallel Databases}, 11:2, 157--180, Springer.
+
 
 \bibitem[Xu et~al., 2002]{XJK99}
 Xu, X., J{\"{a}}ger, J., and Kriegel, H. (2002).
