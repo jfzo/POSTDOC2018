@@ -215,7 +215,7 @@ In order to acomplish the goals of this project the following general and specif
 %Para validar los modelos propuestos, tenemos planificado usar tanto datos “benchmark” conocidos en el área, como datos provenientes de problemas reales de interés regional. Los datos de “benchmark” serán recolectados de sitios web de acceso publico del área de Máquinas de Aprendizaje. En la mayoría de los casos, los conjuntos de datos tienen asociada a cada documento una etiqueta que indica su verdadera clase. A las medidas de evaluación que comparan las etiquetas asignadas por el método de clustering con las verdaderas se les denomina medidas externas. Las medidas externas que usaremos con el fin de validar la propuesta son: Rand Score, Mutual Information, Homogeneity, Completeness y V-Measure. Para aquellos conjuntos de datos que no cuenten con etiquetas verdaderas, se usará la medida interna Silhouette \cite{R87}, la cual cuantifica que tan bien diferenciados están los grupos encontrados por el método bajo evaluación.
 %La etapa de validación será realizada mediante la corrida de 20 experimentos con particionamientos aleatorios para cada uno de los conjuntos de datos utilizados. Los métodos propuestos serán comparados con modelos del estado del arte en al menos 10 conjuntos de datos, tanto reales como sintéticos obtenidos de dos fuentes:
 \item Design of the experiments and validation of the proposed algorithms. 
-In order to validate the proposed techniques, we plan to use benchmark datasets coming from several sources; namely, the UCI machine learning repository\footnote{\url{https://catalog.ldc.upenn.edu/LDC93T3A}}, the Tipster text collection\footnote{\url{https://catalog.ldc.upenn.edu/LDC93T3A}} and the GOV2 text collection\footnote{\url{http://ir.dcs.gla.ac.uk/test_collections/gov2-summary.htm}}. 
+    In order to validate the proposed techniques, we plan to use benchmark datasets coming from several sources; namely, the UCI machine learning repository\footnote{\url{http://archive.ics.uci.edu/ml/index.php}}, the Tipster text collection\footnote{\url{https://catalog.ldc.upenn.edu/LDC93T3A}} and the GOV2 text collection\footnote{\url{http://ir.dcs.gla.ac.uk/test_collections/gov2-summary.htm}}. 
 In some cases the document set is labeled or at least some labels can be inferred from relevance judges (e.g.\ the Tipster collection), and in some other no label information is available (e.g. GOV2 collection).
  There exist several measures for the quantification of clustering quality. When labeling information is available external measures such as V-measure [\cite{RH07}] and Adjusted Rand Index [\cite{HA85}] are applied. 
 In the absence of this information, internal measures such as the Silhouette [\cite{R87}] coefficient and CVNN [\cite{LLXGWW13}] are utilized.
@@ -238,13 +238,11 @@ Design of the proposed models and algorithms:
 Design of a processing strategy for distributed data clustering.
 \item %Construcción de los modelos propuestos.
 Implementation of the proposed scheme.
-\item %Descripción teórica de las capacidades y propiedades de los modelos.
-Theoretical discussion about the scalability of the proposal in terms of algorithmic complexity (time and space).
+%\item %Descripción teórica de las capacidades y propiedades de los modelos.
+%Theoretical discussion about the scalability of the proposal in terms of algorithmic complexity (time and space).
 %(3.1) Modelling environments with distributed patterns, with hybrid fragmentation. (3.2) Modelling non-stationary environments with large distributed sources, with the aforementioned fragmentation type. (3.3) Construction of the proposed models. (3.4) Description of the theoretical capabilities and properties of the models.
 \end{enumerate}
-\item \textit{Stage 3}: %Implementación y optimización de los algoritmos propuestos.
-    Implementation and optimization of the proposed algorithms.
-\item \textit{Stage 4}: %Dise\~no de experimentos y estrategia de validación de los algoritmos propuestos.
+\item \textit{Stage 3}: %Dise\~no de experimentos y estrategia de validación de los algoritmos propuestos.
     Design of Experiments and validation of the proposed algorithms: 
 \begin{enumerate}
 \item %Generación de conjuntos de datos sintéticos.
@@ -257,20 +255,57 @@ Theoretical discussion about the scalability of the proposal in terms of algorit
 
 %(5.1) Generating Synthetic datasets. (5.2) Recollecting synthetic and real datasets. (5.3) Validation Procedure. (5.4) Comparative Analysis.
 \end{enumerate}
-\item \textit{Etapa 5}: %Diseminación de los resultados obtenidos en este proyecto.
-Dissemination of the results of this project
+\item \textit{Stage 4}: %Diseminación de los resultados obtenidos en este proyecto.
+    Dissemination of the attained results.
+\item \textit{Stage 5}: Study of algorithmic complexity in terms of time and space.
+    \begin{itemize}
+        \item Exploration of potential optimizations of the proposed algorithms.
+        \item Discussion about the scalability of the proposed algorithms.
+    \end{itemize}
+\item \textit{Stage 6}: Integration of the proposals with GPU computation at the Master and Workers levels. In this stage, GPU will be specially used to improve array products for distance computation.
+\item \textit{Stage 7}: %Diseminación de los resultados obtenidos en este proyecto.
+    Final dissemination of the attained results and contributions of this project.
 \end{itemize}
 
-During the year 2017 , we will define the Distributed Learning model with hybrid data fragmentation from a statistical learning point of view (S1), we will concentrate efforts on the construction of a meta-ensemble model for distributed learning with hybrid fragmentation  (S2), we will propose mechanisms to quantitatively describe disimilarities between distributed data sources (S4), we will study ensemble models in order to fulfill the problems requirement (S2) and we will empirically evaluate and compare the proposed algorithms (S3).\\
+%(PROY HECTOR)During the year 2017 , we will define the Distributed Learning model with hybrid data fragmentation from a statistical learning point of view (S1), we will concentrate efforts on the construction of a meta-ensemble model for distributed learning with hybrid fragmentation  (S2), we will propose mechanisms to quantitatively describe disimilarities between distributed data sources (S4), we will study ensemble models in order to fulfill the problems requirement (S2) and we will empirically evaluate and compare the proposed algorithms (S3).\\
+
 %Durante el a\~no 2017 definiremos el modelo de clustering distribuido desde el punto de vista de la extracción de representantes desde cada fuente que permitan una posterior identificación de los grupos subyacentes a toda la colección (Etapa 1). Concentraremos esfuerzos en el estudio y construcción de técnicas basadas en Coresets y en distancias derivadas de vecinos más cercanos compartidos (Etapa 2 y 3). Por último, evaluaremos empíricamente y compararemos los algoritmos propuestos (Etapa 4).
 
+In summary, during year 2018, we will concentrate on the development of a distributed framework that addresses the high dimensional data clustering task from a core-representatives approach. That is, the overall data clustering is obtained from representatives chosen independently in each local worker (S1). Therefore the effort will be put on techniques based on Coresets and distances derived from Nearest-Neighbors shared between data points (S2).
+In order to assess the performance of the proposal, real high dimensional datasets will be used and a thorough experimental validation will be made (measuring clustering quality through several executions of the algorithm and under different parameter settings) (S3).
+At the end of 2018, the built algorithms together with their attained results will be reported in at least one indexed journal (S4).
 
-%During the year 2018 we will concentrate efforts on the development of theoretical criteria and algorithms to handle distributed scenarios, with different underlying laws of probability (S3, S4), in scenarios where temporal concept drift is present (S5). We will propose a model that is able to have a good performance in the presence of all these scenarios. Validation with synthetic data sets will be performed (S6).\\
-Durante el a\~no 2018 concentraremos nuestros esfuerzos en el estudio teórico de propiedades de los algoritmos que permitan justificar su desempeño e identificar escenarios menos favorables para su operación. Este análisis facilitará la comprensión de la contribución de los algoritmos propuestos para su posterior diseminación (Etapa 5).
 
-%\section{Work in progress}
-\section{Trabajo en Progreso}
-Una enfoque inicial de exploración para el dise\~no y construcción de algoritmos de clustering de colecciones documentales distribuidas consiste en una adaptación del algoritmo de \cite{ESK03} para un contexto distribuído. En este esquema se ataca primero la alta dimensionalidad de los vectores mediante medidas de distancia basadas en la cantidad de vecinos que comparten dos puntos cualquiera. Por otra parte, la gran cantidad de datos y el ruído se ataca mediante la selección de representantes, denominados \textit{Core-points}. Para esto se utilizan dos parámetros, \textbf{Eps} y \textbf{MinPts}. Luego, un punto será representante solamente si comparte más de \textbf{Eps} vecinos con más de \textbf{MinPts} puntos. Finalmente, se etiquetan con el mismo número de grupo aquellos \textit{Core-points} que se compartan más de \textbf{Eps} puntos, y luego el resto de los puntos recibe la etiqueta de su \textit{Core-point} más cercano en término de vecinos cercanos compartidos. En el caso de que el \textit{Core-point} más cercano esté a distancia menor que \textbf{Eps}, se identifica como ruído.
+
+%(PROY HECTOR)During the year 2018 we will concentrate efforts on the development of theoretical criteria and algorithms to handle distributed scenarios, with different underlying laws of probability (S3, S4), in scenarios where temporal concept drift is present (S5). We will propose a model that is able to have a good performance in the presence of all these scenarios. Validation with synthetic data sets will be performed (S6).\\
+
+%Durante el a\~no 2018 concentraremos nuestros esfuerzos en el estudio teórico de propiedades de los algoritmos que permitan justificar su desempeño e identificar escenarios menos favorables para su operación. Este análisis facilitará la comprensión de la contribución de los algoritmos propuestos para su posterior diseminación (Etapa 5).
+
+During the year 2019, we will focus firstly, on the study of the algorithmic complexity of the overall distributed framework along with the complexity of the tasks performed by each worker (S5). 
+Lastly, the effort will be put on the usage of GPU computation to enhance performance times specially on the computation of distances and neighborhoods (these are the two most expensive operations) (S6). 
+The improvements and findings obtained during this year will be published in at least one indexed
+journal (S7).
+
+
+\section{Work in progress}
+%\section{Trabajo en Progreso}
+%Una enfoque inicial de exploración para el dise\~no y construcción de algoritmos de clustering de colecciones documentales distribuidas consiste en una adaptación del algoritmo de \cite{ESK03} para un contexto distribuído. 
+%En este esquema se ataca primero la alta dimensionalidad de los vectores mediante medidas de distancia basadas en la cantidad de vecinos que comparten dos puntos cualquiera. 
+%Por otra parte, la gran cantidad de datos y el ruído se ataca mediante la selección de representantes, denominados \textit{Core-points}. 
+%Para esto se utilizan dos parámetros, \textbf{Eps} y \textbf{MinPts}. 
+%Luego, un punto será representante solamente si comparte más de \textbf{Eps} vecinos con más de \textbf{MinPts} puntos. 
+%Finalmente, se etiquetan con el mismo número de grupo aquellos \textit{Core-points} que se compartan más de \textbf{Eps} puntos, y luego el resto de los puntos recibe la etiqueta de su \textit{Core-point} más cercano en término de vecinos cercanos compartidos. 
+%En el caso de que el \textit{Core-point} más cercano esté a distancia menor que \textbf{Eps}, se identifica como ruído.
+
+
+An initial approach that we took is to explore the construction of clustering algorithms capable of dealing with high dimensional and distributed text collections by adapting the centralized algorithm proposed by \cite{ESK03}.
+Consequently, the curse of dimensionality is addressed by treating the distance between two data points as a function of the nearest neighbors they share (nearest in terms of a traditional metric such as the euclidean distance).
+Additionally, the large number of observations and the potential noise or abnormal data points are addressed by a representatives selection mechanism performed on each worker.
+Is in this way that each worker reports only those points from its local subset that share a sufficient quantity of neighbors with their nearest neighbors. 
+The rationale behind this scheme is that the presence of noise is denoted by more or less isolated data points.
+Then, the master node concentrates all these core points and labels them. Finally, those core points along with their labels are transmitted to the worker nodes, each worker labels its local subsets and then those labels are transmitted to the master node. In this final labeling, noise is identified as an extra class.
+
+
 
 El esquema anterior fue pensado en un escenario centralizado en donde es posible calcular las distancias entre todos los pares de puntos. Para un conjunto de datos con $n$ puntos, cada uno representado por un vector en $\mathbb{R}^d$, el costo de calcular estas distancias es O($n^2 * d$) y de almacenarlas es O($n^2$). Al considerar grandes volúmenes de datos representados además por vectores altamente dimensionales, resulta claro que el desempe\~no del método difícilmente escale.
 
