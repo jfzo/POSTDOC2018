@@ -288,6 +288,13 @@ journal (S7).
 
 
 \section{Work in progress}
+% El esquema anterior fue pensado en un escenario centralizado en donde es posible calcular las distancias entre todos los pares de puntos. Para un conjunto de datos con $n$ puntos, cada uno representado por un vector en $\mathbb{R}^d$, el costo de calcular estas distancias es O($n^2 * d$) y de almacenarlas es O($n^2$). Al considerar grandes volúmenes de datos representados además por vectores altamente dimensionales, resulta claro que el desempe\~no del método difícilmente escale.
+
+The Shared-Nearest-Neighbor clustering algorithm presented by \cite{ESK03} proposes the integration of the DBSCAN clustering algorithm along with a shared-neighbors based similarity measure. 
+This scheme tackles the variable density, size among clusters and also the curse of dimensionality in a centralized setting. 
+In spite of its valuable contribution this method assumes that pairwise distance/similarity computation and storage is always feasible. 
+Due to the quadratic time complexity involved in the computation of the distances and the similar space complexity to store these data, centralized methods that rely on this calculations do not scale in massive data scenarios.  
+
 %\section{Trabajo en Progreso}
 %Una enfoque inicial de exploración para el dise\~no y construcción de algoritmos de clustering de colecciones documentales distribuidas consiste en una adaptación del algoritmo de \cite{ESK03} para un contexto distribuído. 
 %En este esquema se ataca primero la alta dimensionalidad de los vectores mediante medidas de distancia basadas en la cantidad de vecinos que comparten dos puntos cualquiera. 
@@ -303,15 +310,16 @@ Consequently, the curse of dimensionality is addressed by treating the distance 
 Additionally, the large number of observations and the potential noise or abnormal data points are addressed by a representatives selection mechanism performed on each worker.
 Is in this way that each worker reports only those points from its local subset that share a sufficient quantity of neighbors with their nearest neighbors. 
 The rationale behind this scheme is that the presence of noise is denoted by more or less isolated data points.
-Then, the master node concentrates all these core points and labels them. Finally, those core points along with their labels are transmitted to the worker nodes, each worker labels its local subsets and then those labels are transmitted to the master node. In this final labeling, noise is identified as an extra class.
+Then, the master node concentrates all these core points, builds a network based on their shared-nearest-neighbor similarity and labels them by using a network propagation scheme such as the one proposed by \cite{RAK07}.
+Finally, those core points along with their labels are transmitted back to the worker nodes, each worker labels its local subset by using the label of its nearest corepoint and then retransmits this information to the master node. Once the master node receives all the labels it reports the final clustering of the collection.
 
 
+%El trabajo que actualmente estamos realizando considera que la colección se encuentra particionada aleatoriamente en un conjunto de nodos o máquinas. En cada uno de estos nodos se usa el esquema de \cite{ESK03} para identificar \textit{Core-points} y etiquetar los datos locales. Tomando algunas ideas propuestas para la construcción de core-sets distribuídos por \cite{BEL13}, se realiza en cada máquina una selección de \textit{Core-points} aleatoria con pesos inversamente proporcionales a la cantidad de puntos con la etiqueta del \textit{Core-point} y luego se transmiten los puntos seleccionados aun nodo central. Es importante mencionar que, a diferencia del trabajo en curso que se describe en esta sección, las contribuciones en esta línea no consideran en general datos de alta dimensionalidad (vectores con miles de atributos) ni tampoco grupos que pueden tener formas no esféricas. De esta manera, serán seleccionados con mayor probabilidad aquellos \textit{Core-points} ubicados en grupos más pequeños, buscando así representar a todos los grupos independientemente de que tan peque\~nos sean. La cantidad de puntos seleccionados es un parámetro expresado en términos de porcentaje y es precisamente este mecanismo el que permite atacar los problemas generados por los grandes volúmenes de datos. Así en el nodo central se realizará nuevamente un clustering usando la medida de distancia basada en vecinos más cercanos compartidos, pero únicamente sobre una fracción de todos los \textit{Core-points}. El agrupamiento final contendrá los grupos de la colección completa, lo que corresponderá al resumen esperado de la colección.
 
-El esquema anterior fue pensado en un escenario centralizado en donde es posible calcular las distancias entre todos los pares de puntos. Para un conjunto de datos con $n$ puntos, cada uno representado por un vector en $\mathbb{R}^d$, el costo de calcular estas distancias es O($n^2 * d$) y de almacenarlas es O($n^2$). Al considerar grandes volúmenes de datos representados además por vectores altamente dimensionales, resulta claro que el desempe\~no del método difícilmente escale.
+%Actualmente, hemos realizado experimentos sobre datos sintéticos con formas esfericas y no esfericas, obteniendo resultados interesantes. Para poder realizar afirmaciones concluyentes, aplicaremos el método sobre colecciones documentales reales.
 
-El trabajo que actualmente estamos realizando considera que la colección se encuentra particionada aleatoriamente en un conjunto de nodos o máquinas. En cada uno de estos nodos se usa el esquema de \cite{ESK03} para identificar \textit{Core-points} y etiquetar los datos locales. Tomando algunas ideas propuestas para la construcción de core-sets distribuídos por \cite{BEL13}, se realiza en cada máquina una selección de \textit{Core-points} aleatoria con pesos inversamente proporcionales a la cantidad de puntos con la etiqueta del \textit{Core-point} y luego se transmiten los puntos seleccionados aun nodo central. Es importante mencionar que, a diferencia del trabajo en curso que se describe en esta sección, las contribuciones en esta línea no consideran en general datos de alta dimensionalidad (vectores con miles de atributos) ni tampoco grupos que pueden tener formas no esféricas. De esta manera, serán seleccionados con mayor probabilidad aquellos \textit{Core-points} ubicados en grupos más pequeños, buscando así representar a todos los grupos independientemente de que tan peque\~nos sean. La cantidad de puntos seleccionados es un parámetro expresado en términos de porcentaje y es precisamente este mecanismo el que permite atacar los problemas generados por los grandes volúmenes de datos. Así en el nodo central se realizará nuevamente un clustering usando la medida de distancia basada en vecinos más cercanos compartidos, pero únicamente sobre una fracción de todos los \textit{Core-points}. El agrupamiento final contendrá los grupos de la colección completa, lo que corresponderá al resumen esperado de la colección.
-
-Actualmente, hemos realizado experimentos sobre datos sintéticos con formas esfericas y no esfericas, obteniendo resultados interesantes. Para poder realizar afirmaciones concluyentes, aplicaremos el método sobre colecciones documentales reales.
+The ongoing work described above has been tested on synthetic and real text data but with reduced size. 
+We expect to be able to test the algorithm with really large collections (more than several hundred of thousands of documents) and also to improve the local workers by exploiting the power of GPU computing. 
 
 
 %\section{Available Resources}
@@ -477,10 +485,16 @@ Naldi, M.~C. and Campello, R. J. G.~B. (2014).
 \newblock {\em Neurocomputing}, 127:30--42.
 
 \bibitem[Qi et~al., 2008]{ZLW08}
-Qi, Z., Jinze, L., and Wei, W. (2008).
+Qi, Z. and Jinze, L., and Wei, W. (2008).
 \newblock {Approximate clustering on distributed data streams}.
 \newblock {\em Proceedings - International Conference on Data Engineering},
   00:1131--1139.
+
+
+\bibitem[Raghavan et~al., 2007]{RAK07}
+    Raghavan, U., N.  and Albert, R. and Kumara, S. (2007).
+    \newblock{Near linear time algorithm to detect community structures in large-scale networks}.
+    \newblock{\em Physical review}, 76(3).
 
 \bibitem[Rosenberg and Hirschberg, 2007]{RH07}
 Rosenberg, A. and Hirschberg, J. (2007).
