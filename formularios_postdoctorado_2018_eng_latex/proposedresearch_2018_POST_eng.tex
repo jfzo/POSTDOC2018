@@ -147,12 +147,16 @@ A hierarchical algorithm that works on distributed and heterogeneous data was pr
 %\section{Hipótesis}
 \section{Hypothesis}
 %Un enfoque distribuido del tipo maestro/esclavo de algoritmos de agrupamiento (clustering) locales y paralelos de una pasada, obtendrán resultados comparables a un esquema centralizado, en términos de medidas de desempeño de pureza y entropía, para problemas donde los datos son altamente dimensionales, masivos y naturalmente distribuidos provenientes de bases de datos documentales. 
-A distributed master/slave approach for the design of single-pass and parallel clustering algorithms will enable the construction of methods capable of attaining results comparable to a centralized scheme, in terms of standard clustering performance measures such as Rand-score, Mutual Information and V-Measure, for high dimensional, massive and distributed document databases.
+%%A distributed master/slave approach for the design of single-pass and parallel clustering algorithms will enable the construction of methods capable of attaining results comparable to a centralized scheme, in terms of standard clustering performance measures such as Rand-score, Mutual Information and V-Measure, for high dimensional, massive and distributed document databases.
 
-* Distributed collections
-* Distributed and Parallel processing based on representative points
-* Shared Nearest Neighbors for representative point identification
+%* Distributed collections
+%* Distributed and Parallel processing based on representative points
+%* Shared Nearest Neighbors for representative point identification
 
+A Master/Slave Clustering method, along with a Shared-Nearest-Neighbor strategy for the identification of representative points in each worker, will outperform other state of the art distributed approaches (in terms of clustering quality measures such as V-measure and Rand-Index), over text collections in which documents are distributed across several nodes in a network.
+\begin{itemize}
+\item The within-node computational procedure will exploit modern parallel technologies existing in multicore-architectures and the usage of GPU accelerated computing.
+\end{itemize}
 
 %\section{Objetivos}
 \section{Goals}
