@@ -57,11 +57,23 @@ Along with this, when the number of documents is large (tens or hundreds of thou
 Even in the most favorable scenario the storage and computational power tackle this challenge but the response time are excessive.
 
 %Existe tres enfoques exitosos para la construcción de algoritmos de agrupamiento sobre grandes volúmenes de datos. El primero consiste en introducir restricciones en la cantidad de accesos a un documento (una sola pasada), el segundo en usar el paralelismo disponible en las arquitecturas multi-core actuales o usar GPUs (tarjetas gráficas) y por último, particionar el conjunto de datos en mútlples máquinas para su procesamiento distribuido.
-There are three approaches that have been successfully applied to the construction of clustering algorithms capable of processing large volumes of data. The first one introduces constraints on the number of passes allowed on a document (related to the amount of time it is loaded into main memory). The second one exploits current multi-core architectures to perform parallel processing of the data, which does not solve the massive volume problem. The last one combines the computational power of a single machine together with the scalable storage capability of a distributed system by partitioning the dataset into several independent machines connected through a network.
+There are three approaches that have been successfully applied to the construction of clustering algorithms capable of processing large volumes of data. The first one introduces constraints on the number of passes allowed on a document (related to the amount of time it is loaded into main memory). The second one exploits current multi-core architectures to perform parallel processing of the data. Both strategies do not tackle the problem on scenarios in which the data is distributed.
+The last one combines the computational power of a single machine together with the scalable storage and processing capabilities of a distributed system in which data partitions are independently processed by several machines connected through a network.
+
+\subsection*{Parallel processing architectures}
+
+A multi-core processor (CPU) is a single chip that combines two or more independent processing units called \textit{cores}.
+These processors are typically shared-memory architectures designed to support general purpose operations and contain from $2$ to several tens of cores optimized for sequential serial processing of a set of instructions.
+A Graphical-Processing-Unit (GPU) is a massively parallel processor consisting of hundreds or even thousands of smaller, more efficient cores designed for handling multiple tasks simultaneously. At its beginning, GPUs were employed for hardware-assisted bitmap operations to assist in the display and usability of graphical operating systems. The release of the first GPU built with NVIDIA's CUDA Architecture enabled the usage of this hardware for general purporse computation~\citep{SK10}.
+
+%In our opinion, an hybrid strategy in the usage of both parallel technologies is mandatory in order to address massive data scenarios. 
+%A thumb rule to apply is to run on CPU small and non­parallelizable tasks and large and parallelizable tasks on GPU.
+
 
 %Esta última línea de trabajo es promisoria dado que permite aprovechar las capacidades locales de computadores que no necesariamente deben ser servidores de gran escala con múltiples procesadores. Dentro de este enfoque existen dos contextos respecto del origen de los datos que deben ser diferenciados. Por una parte, existen problemas donde la estrategia usada para hacer frente al gran volúmen de datos consiste en distribuirlo entre distintos computadores, lo que conlleva un traslado de datos durante la ejecución del algoritmo \citep{N15}. Por otra parte, existe otro contexto en el que los datos se encuentran naturalmente distribuídos, e.g. colecciones documentales locales a distintas zonas geográficas, y donde además no es posible  centralizarlos, debido a costos de transmisión o por motivos de privacidad \citep{JW05,LHLX12}.
-The last above mentioned approach seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. On the one hand, in some problems where the dataset is large but collected in a centralized fashion, the strategy employed consists in partitioning the collection into several
-machines or nodes of a network. This scheme leads to the transmission of a lot of data during the execution of the algorithm~\citep{N15}. On the other hand, there are some problems where the data is generated in a distributed fashion and where besides it is not feasible to centralize the data because of high transmission costs or privacy issues~\citep{JW05,LHLX12}, e.g.\  search engines  work with document collections originated and stored in different geographical locations.
+The above mentioned approach seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. 
+On the one hand, in some problems where the dataset is large but collected in a centralized fashion, the strategy employed consists in partitioning the collection into several machines or nodes of a network. 
+This scheme leads to the transmission of a lot of data during the execution of the algorithm~\citep{N15}. On the other hand, there are some problems where the data is generated in a distributed fashion and it is not feasible to centralize the data because of high transmission costs or privacy issues~\citep{JW05,LHLX12}, e.g.\  search engines  work with document collections originated and stored in different geographical locations.
 
 
 
@@ -150,6 +162,9 @@ A hierarchical algorithm that works on distributed and heterogeneous data is pre
 \cite{JCHAC15} propose a hierarchical clustering algorithm for distributed data that builds the clusters by incrementally processing the data points. The authors re-state the hierarchical clustering problem as a Minimum Spanning Tree construction problem over a graph. In order to integrate several local models they also propose a technique for combining multiple minimum spanning trees, assuming that these trees were obtained from disjoint subgraphs of the complete original graph. This mixture procedure iterates until a single tree is obtained, which in turn denotes the hierarchical clustering originally pursued.
 
 \subsection{Discussion}
+METER A \cite{NMDG14} y a \cite{DG09}
+
+
 Most of previous efforts has been put onto the clustering of large number of instances
 
 \section{Proposal}
@@ -548,6 +563,12 @@ Rousseeuw Peter J. (1987).
 Samatova, N. F. and Ostrouchov, G. and Geist, A. and Melechko, A. V. (2002).
 \newblock{RACHET: An Efficient Cover-Based Merging of Clustering Hierarchies from Distributed Datasets}.
 \newblock{Journal of Distributed and Parallel Databases}, 11:2, 157--180, Springer.
+
+
+\bibitem[Sanders and Kandrot, 2010]{SK10}
+Sanders, J. and Kandrot, E. (2010).
+\newblock{CUDA by Example: An Introduction to General-Purpose GPU Programming} (1st edition).
+\newblock{Addison-Wesley Professional}.
 
 
 \bibitem[Xu et~al., 2002]{XJK99}
