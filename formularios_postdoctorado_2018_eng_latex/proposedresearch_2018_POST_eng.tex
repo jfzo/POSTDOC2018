@@ -194,10 +194,10 @@ Considering the parallel processing improvements for centralized computation and
 We propose a Distributed and Parallel strategy for dealing with high dimensional and massive text data clustering based on the Shared Nearest Neighbors scheme (SNN)~\citep{JP73}\citep{ESK03}. 
 We expect that the inspiration in these two succesfully employed centralized approaches allows firstly, to build more robust algorithms for high dimensional data and secondly, to build scalable distributed algorithms based on representative points found in each node.
 
-The proposed framework uses a Master/Slave model of computation in which a master node partitions the dataset and then each slave or worker node processes its assigned chunk of data in order to identify points that represents each group (\textit{Dataset partitioning} and \textit{Local model generation} stages in Figure
+The proposed framework uses a Master/Worker model of computation in which a master node partitions the dataset and then each worker node processes its assigned chunk of data in order to identify points that represents each group (\textit{Dataset partitioning} and \textit{Local model generation} stages in Figure
 \ref{fig:distributed_clustering}). Then, these selected points are transmitted to the Master node in order to build an overall model which is then transmitted back to the workers to perform a model refining procedure~(\textit{Model refining} dotted loop in Figure \ref{fig:distributed_clustering}). This step can be performed several times, after which the group assignments are transmitted from each worker to the Master to generate the final result.
 
-In addition to the distributed computation scheme, within each node it is possible to improve its performance by exploiting the underlying multicore technologies, e.g. in distance and k-nearest neighbor computation \citep{GMNAG15}. 
+In addition to the distributed computation scheme, within each node it is possible to improve its performance by exploiting the underlying multicore technologies, e.g. k-nearest neighbor computation~\citep{GMNAG15} and SNN computation~\citep{KMGBG16}. 
 It is in this part of the proposed strategy where we expect that the introduction of parallel technologies such as GPU enhance the overall performance of the distributed algorithm.
 
 The distributed computation strategy allows to decrease the cost of computing the complete dataset in one node which sometimes is unfeasible (Dataset sizes beyond the primary memory capacity). Furthermore, as each node can incorporate parallel routines (enabled by exploiting multicore processors or GPUs) to accelerate its partial computations the overall time cost of the algorithm is also improved.
@@ -211,9 +211,9 @@ The distributed computation strategy allows to decrease the cost of computing th
 %* Distributed and Parallel processing based on representative points
 %* Shared Nearest Neighbors for representative point identification
 
-A Master/Slave Clustering method along with a Shared-Nearest-Neighbor strategy for the identification of representative points in each worker, will outperform other state of the art distributed approaches (in terms of clustering quality measures such as V-measure and Rand-Index), over text collections in which documents are distributed across several nodes in a network and whose total size exceeds current RAM available in modern desktop computers.
+A Master/Worker Clustering method along with a Shared-Nearest-Neighbor strategy for the identification of representative points in each worker, will outperform other state of the art distributed approaches (in terms of clustering quality measures such as V-measure and Rand-Index), over text collections in which documents are distributed across several nodes in a network and whose total size exceeds current RAM available in modern desktop computers.
 \begin{itemize}
-\item The computational procedure performed within each node will exploit modern parallel technologies existing in multicore-architectures and the usage of GPU accelerated computing.
+\item The overall time will be decreased by exploiting modern parallel technologies existing in multicore-architectures such as GPU computing within each node.
 \end{itemize}
 
 %\section{Objetivos}
@@ -421,7 +421,7 @@ Bahmani, B., Moseley, B., Vattani, A., Kumar, R., and Vassilvitskii, S. (2012).
 \newblock{\em Proceedings of the VLDB Endowment (PVLDB)}, 5:622--633.
 
 \bibitem[Balcan et~al., 2013]{BEL13}
-Balcan, M.~F., Ehrlich, S., and Liang, Y. (2013).
+Balcan, M.F., Ehrlich, S., and Liang, Y. (2013).
 \newblock{Distributed K-Means and K-Median Clustering on General
   Topologies}.
 \newblock{\em Advances in Neural Information Processing Systems 26 (NIPS
@@ -541,6 +541,12 @@ Klusch, M., Lodi, S., and Moro, G. (2003).
 \bibitem[Kriegel et~al., 2005]{KKPS05}
 Kriegel, H.-p., Kr, P., Pryakhin, A., and Schubert, M. (2005).
 \newblock{Effective and Efficient Distributed Model-based Clustering}.
+
+\bibitem[Kumari et~al., 2016]{KMGBG16}
+Kumari, S., Maurya, S., Goyal, P., Balasubramaniam, S.S. and Goyal, N. (2016).
+\newblock{Scalable Parallel Algorithms for Shared Nearest Neighbor Clustering}.
+\newblock{\em 23rd International Conference on High Performance Computing (HiPC)}, 72--81, IEEE.
+
 
 \bibitem[Li et~al., 2003]{LZO03}
 Li, T., Zhu, S., and Ogihara, M. (2003).
