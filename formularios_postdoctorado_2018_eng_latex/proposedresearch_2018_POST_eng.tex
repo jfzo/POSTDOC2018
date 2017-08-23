@@ -41,10 +41,13 @@ Keep in mind the Bases del Concurso FONDECYT de Postdoctorado 2018 and Applicati
 %Como consecuencia del crecimiento explosivo de la WEB, la integración de motores de búsqueda como Google en computadoras personales y dispositivos móviles, y del uso de la redes sociales, la tarea de agrupamiento automático de texto, e.g. Tweets o documentos en un motor de búsqueda, resulta cada vez de mayor importancia debido a la necesidad de revelar las categorías subyacentes en grandes volúmenes de datos. La generación de grandes cantidades de documentos sobrepasa hoy en día las capacidades de computadores personales e incluso de equipos de cómputo de alto desempeño. 
 As a consequence of the explosive growth of the WEB, the integration of search engines such as Google into personal computers and mobile devices and the wide use of social networks, the task of clustering text data has gained importance due to the necessity of unraveling the underlying categories in large volumes of text data (e.g. Tweets or WEB pages). Nowadays the generation of large amounts of documents surpasses the computational power of personal computers and even of high performance computers.
 %A modo de ejemplo, se estima que la cantidad de páginas WEB que motores de búsqueda populares como Google o Yahoo indexan es del orden de las decenas de billón.
-As an example, it is estimated that the amount of WEB pages that popular search engines such as Yahoo! and Google index is higher than the 40 billion of pages\footnote{\url{http://www.worldwidewebsize.com}}.
+As an example, it is estimated that the amount of WEB pages that popular search engines such as Yahoo! and Google index is higher than 40 billion of pages\footnote{\url{http://www.worldwidewebsize.com}}.
 %Es por lo tanto de gran interés poder desarrollar técnicas capaces de automáticamente organizar, clasificar y resumir colecciones de documentos que se encuentren distribuidas en múltiples máquinas de una red, y que a su vez hagan uso eficiente del hardware moderno, en particular del paralelismo existente en las arquitectura multi-núcleo (multi-core). En problemas reales como  \textit{Collection Selection} para colecciones distribuídas, en donde para una consulta dada se debe identificar la colección más adecuada dentro de la cual se buscaran documentos relevantes \citep{CM13}, los desafíos relacionados con la escalabilidad y eficiencia en los métodos de \textit{Knowledge Discovery} se han vuelto de gran importancia. Los algoritmos tradicionales operan usualmente con conjuntos de datos cargados completamente en memoria principal. De ahí que puedan realizar operaciones de cálculo de distancias entre pares de documentos de manera muy rápida, visitando cada dato muchas veces. Cuando el tamaño de la colección es mucho mayor a la cantidad de memoria RAM disponible, ya sea por la cantidad de documentos o también por el tamaño de cada uno, este proceso es impracticable debido a restricciones de espacio o capacidad de cómputo.
 It is therefore of great interest to develop algorithmic techniques capable of automatically organize, classify and summarize document collections distributed in multiple machines of a network, and that also perform efficiently in modern hardware, particularly within parallel processing frameworks in multi-core architectures. In real problems such as \textit{Collection Selection} for distributed document databases, in which for a given query the computer node containing the most suitable
-sub-collection must be selected to answer it~\citep{CM13}, the challenges related to the scalability and efficiency of \textit{Knowledge Discovery} methods have become very important. Traditional algorithms often assume that the whole dataset is loaded into main memory (RAM) and thus every document can be accessed at any time with no access latency. In scenarios where the size of the collection is much bigger than the amount of available RAM either because of the number of documents or the length of each document, this ideal loading process is unfeasible due to real constraints in the storage or computational capabilities.
+sub-collection must be selected to answer it,
+%~\citep{CM13}
+the challenges related to the scalability and efficiency of \textit{Knowledge Discovery} methods have become very important. Traditional algorithms often assume that the whole dataset is loaded into main memory (RAM) and thus every document can be accessed at any time with no access latency. Actual real problems present though challenges since the sizes of the collections explored nowadays are much bigger than the amount of available RAM in modern computers\footnote{Amount of primary memory in modern computers reaches about 128 Gigabytes but a medium size document collection such as RCV1 can reach near 1 Terabyte (depending on the followed text processing procedure).}, either because of the number of documents or the size of the computational representation of the documents.
+%, this ideal scenarioloading process is unfeasible due to real constraints in the storage or computational capabilities.
 
 %A menudo, el texto se estructura en colecciones digitales de documentos cuya extensión (cantidad de caracteres) es variable, e.g. las páginas WEB o el contenido generado por los usuarios de redes sociales como Twitter. Para permitir el procesamiento de estas colecciones, primero se extrae el conjunto de palabras que aparece en ella y se ordena lexicográficamente; a este conjunto ordenado se le denomina vocabulario. Luego, el contenido de cada documento es representado algebraicamente por un vector, donde cada componente corresponderá a una de las palabras del vocabulario y cuyos valores estarán dados por las frecuencias de ocurrencia de cada palabra respectiva en el documento. Como consecuencia de la riqueza léxica del lenguaje, la cardinalidad del vocabulario es en general muy grande en comparación con los tamaños usados habitualmente por los algoritmos tradicionales de reconocimiento de patrones, i.e. partiendo del orden de los miles hasta los millones de palabras. Debido a esto, la tarea de agrupamiento automático de documentos tiene un alto costo de cómputo (tiempo de uso del procesador) y de almacenamiento (cantidad de memoria RAM y disco usado). Si a lo anterior se agrega que las cantidades de documentos en una colección puede superar los millones, entonces tanto las técnicas tradicionales de procesamiento, agrupamiento,  así como también las capacidades computacionales actuales  de una sola máquina resultan insuficientes o en el mejor de los casos los tiempos de respuesta son excesivos.
 Often text data is arranged into digital collections of documents containing a variable number of  words. 
@@ -65,13 +68,13 @@ The last one combines the computational power of a single machine together with 
 A multi-core processor (CPU) is a single chip that combines two or more independent processing units called \textit{cores}.
 These processors are typically shared-memory architectures designed to support general purpose operations and contain from $2$ to several tens of cores optimized for sequential serial processing of a set of instructions.
 A Graphical-Processing-Unit (GPU) is a massively parallel processor consisting of hundreds or even thousands of smaller, more efficient cores designed for handling multiple tasks simultaneously. At its beginning, GPUs were employed for hardware-assisted bitmap operations to assist in the display and usability of graphical operating systems. The release of the first GPU built with NVIDIA's CUDA Architecture enabled the usage of this hardware for general purporse computation~\citep{SK10}.
-
+\vspace{15pt}
 %In our opinion, an hybrid strategy in the usage of both parallel technologies is mandatory in order to address massive data scenarios. 
 %A thumb rule to apply is to run on CPU small and non­parallelizable tasks and large and parallelizable tasks on GPU.
 
 
 %Esta última línea de trabajo es promisoria dado que permite aprovechar las capacidades locales de computadores que no necesariamente deben ser servidores de gran escala con múltiples procesadores. Dentro de este enfoque existen dos contextos respecto del origen de los datos que deben ser diferenciados. Por una parte, existen problemas donde la estrategia usada para hacer frente al gran volúmen de datos consiste en distribuirlo entre distintos computadores, lo que conlleva un traslado de datos durante la ejecución del algoritmo \citep{N15}. Por otra parte, existe otro contexto en el que los datos se encuentran naturalmente distribuídos, e.g. colecciones documentales locales a distintas zonas geográficas, y donde además no es posible  centralizarlos, debido a costos de transmisión o por motivos de privacidad \citep{JW05,LHLX12}.
-The above mentioned approach seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. 
+The last hybrid approach previously mentioned seems promising since it allows to exploit the local capabilities of single computers with multi-core architectures without sacrificing scalability to large data volumes because of its distributed design. Within this path there are two contexts regarding the data generation scenario. 
 On the one hand, in some problems where the dataset is large but collected in a centralized fashion, the strategy employed consists in partitioning the collection into several machines or nodes of a network. 
 This scheme leads to the transmission of a lot of data during the execution of the algorithm~\citep{N15}. On the other hand, there are some problems where the data is generated in a distributed fashion and it is not feasible to centralize the data because of high transmission costs or privacy issues~\citep{JW05,LHLX12}, e.g.\  search engines  work with document collections originated and stored in different geographical locations.
 
@@ -106,35 +109,39 @@ global model is built. This scheme is depicted in Figure~\ref{fig:distributed_cl
 
 \subsection{Main contributions on parallel clustering algorithms}
 
-\citep{XJK99} presented a parallel version of \textit{DBSCAN} (\textit{PDBSCAN}). The authors presented the ‘shared-nothing’ architecture with multiple computers interconnected through a network. A fundamental component of a shared-nothing system is its distributed data structure. They introduced the dR*-tree, a distributed spatial index structure in which the data is spread among multiple computers and the indexes of the data are replicated on every computer. A performance evaluation
-showed that PDBSCAN offers nearly linear speed-up and has excellent scale-up and size-up behavior. 
-In \citep{DM99}, the authors presented an algorithm that exploits the inherent data-parallelism in the k-means algorithm. They analytically showed that the speed-up and the scale-up of the algorithm approached the optimal as the number of data points increased.
+\citep{XJK99} presented a parallel version of \textit{DBSCAN} (\textit{PDBSCAN}). The authors presented the ‘shared-nothing’ architecture with multiple computers interconnected through a network. A fundamental component of a shared-nothing system is its distributed data structure. They introduced the dR*-tree, a distributed spatial index structure in which the data is spread among multiple computers and the indexes of the data are replicated on every computer. 
+A performance evaluation showed that PDBSCAN offers nearly linear speed-up and has excellent scale-up and size-up behavior. 
+
+In \citep{DM99}, the authors presented an algorithm that exploits the inherent data-parallelism in the K-Means algorithm. They analytically showed that the speed-up and the scale-up of the algorithm approached the optimal as the number of data points increased.
+
 Another scalable approach based on secondary memory consisted in designing algorithms able to work  within the MapReduce framework. %\footnote{Hadoop MapReduce is a software solution that enables the construction of applications capable of processing large amounts of data (e.g. Terabytes) in a parallel fashion over big computer clusters.}. 
 In this context we highlight the contribution made %by Das \textit{et al.} \citep{DDGR07} in which they propose an implementation of the EM algorithm and also 
 by \citep{EIM11} in which they tackled the K-Median problem by using MapReduce.
 %Das \textit{et al.} \citep{DDGR07} present an approach to filter recommendations for users of Google News in order to generate personalized recommendations in a collaborative way. They generate recommendations using three approaches: collaborative filtering using MinHash clustering, probabilistic Latent Semantic Indexing (pLSI), and co-visitation counts. The recommendations are combined from different algorithms using a linear model. The authors claim that the approach is content agnostic and consequently domain independent, making it easily adaptable for other applications and languages with minimal effort. 
 %In \citep{EIM11} the authors design clustering algorithms that can be used in MapReduce, still one of the most popular programming environment for processing large data sets. They focus on the practical and popular clustering problems, k-center and k-median. 
-The authors developed a fast clustering algorithm with constant factor approximation guarantees. The algorithm employed a sampling strategy to decrease the data size and after that a time consuming clustering algorithm such as local search or Lloyd's algorithm was performed on the resulting data set. 
+The authors developed a fast clustering algorithm with constant factor approximation guarantees. The algorithm employed a sampling strategy to decrease the data size and after that a time consuming clustering algorithm such as local search or Lloyd's algorithm was performed on the resulting dataset. 
 %The proposed algorithm had sufficient flexibility to be used in practice since they ran in a constant number of MapReduce rounds. The experiments showed that proposed algorithms solutions were similar to or better than the other algorithm solutions.
 
-Another parallel approach for K-Means was presented by \citep{BMVKV12} and it is called K-Means$++$. The initialization of the k means algorithm is crucial, and the authors claimed that the proposed algorithm obtained an initial set of centers that is probably close to the optimum solution. A major downside of K-means$++$ is its inherent sequential nature, which limits its applicability to massive data: one must make k passes over the data to find a good initial set of centers. In this work the
-authors showed how to drastically reduce the number of passes needed to obtain, in parallel, a good initialization. This is unlike prevailing efforts on parallelizing k-means that have mostly focused on the post-initialization phases of k-means. The proposed initialization obtained a nearly optimal solution after a logarithmic number of passes, and then showed that in practice a constant number of passes suffices. 
+Another parallel approach for K-Means was presented by \citep{BMVKV12} and it is called K-Means$++$. The initialization of the K-Means algorithm is crucial, and the authors claimed that the proposed algorithm obtained an initial set of centers that is probably close to the optimum solution. A major downside of K-Means$++$ is its inherent sequential nature, which limits its applicability to massive data: one must make K passes over the data to find a good initial set of centers. In this work the
+authors showed how to drastically reduce the number of passes needed to obtain, in parallel, a good initialization. This is unlike prevailing efforts on parallelizing K-Means that have mostly focused on the post-initialization phases of K-Means. The proposed initialization obtained a nearly optimal solution after a logarithmic number of passes, and then showed that in practice a constant number of passes suffices. 
 
-De~Vries \textit{et al.} \citep{DDGN15} proposed a scalable algorithm that clusters hundreds of millions of web pages into hundreds of thousands of clusters. It does this on a single mid-range machine using efficient algorithms and compressed document representations. It is applied to two WEB scale crawls covering tens of terabytes (ClueWeb09 and ClueWeb12). %contain 500 and 733 million web pages and were clustered into 500,000 to 700,000 clusters. Previous approaches clustered a sample that limits the maximum number of discoverable clusters. 
-The proposed algorithm employed the entire collection for clustering and produced several orders of magnitude more clusters than the existing algorithms. Fine grained clustering is necessary for meaningful clustering in massive collections where the number of distinct topics grows linearly with collection size. Fine-grained clusters showed an improved cluster quality when assessed with two novel evaluations using ad-hoc search relevance judgments and Spam classifications for external validation. These evaluations solved the problem of assessing the quality of clusters where categorical labeling was unavailable.
 
 \subsection{Clustering after applying dimensionality reduction}
 
 \citep{KHSJ01} proposed a method to obtain the Principal Components (PCA) over heterogeneous and distributed data. Based on this contribution on dimensionality reduction they also proposed a clustering method that worked over high dimensional data. Once the global principal components were obtained by using the distributed method and transmitted to each node, local data was projected onto the components and then a traditional clustering technique was applied. Finally, a central node
 integrated the local clusters in order to obtain a global clustering model.
 
+\citep{LZO03} proposed an algorithm named the \textit{CoFD} algorithm, which was a non-distance based clustering algorithm for high dimensional spaces. Based on the Maximum Likelihood Principle, \textit{CoFD} attempted to optimize its parameter settings to maximize the likelihood between data points and the model generated by the parameters. The distributed version of the algorithm, called \textit{D-CoFD}, was also proposed. The authors claimed that the experimental results on both synthetic and real datasets showed the efficiency and effectiveness of \textit{CoFD} and \textit{D-CoFD} algorithms.
+
 Several years later, \citep{LBK13} presented another algorithm for principal components extraction over distributed data. To this end, each node computed PCA over its local data and transmitted a fraction of them to a central node. This node used the received components to estimate the global principal components, which were later transmitted to each node. After this, in every node, local data were projected onto the global components and the projected data were used for computing a coreset by means of a distributed algorithm. The global coreset built from the local projected data was finally used to obtain a global clustering model.  
 
-\citep{LZO03} proposed an algorithm named the \textit{CoFD} algorithm, which was a non-distance based clustering algorithm for high dimensional spaces. Based on the Maximum Likelihood Principle, \textit{CoFD} attempted to optimize its parameter settings to maximize the likelihood between data points and the model generated by the parameters. The distributed version of the algorithm, called \textit{D-CoFD}, was also proposed. The authors claimed that the experimental results on both synthetic and real data sets showed the efficiency and effectiveness of \textit{CoFD} and \textit{D-CoFD} algorithms.
+\citep{DDGN15} proposed a scalable algorithm that clusters hundreds of millions of WEB pages into hundreds of thousands of clusters. It does this on a single mid-range machine using efficient algorithms and compressed document representations (a binary signature for each document). It is applied to two WEB scale crawls covering tens of terabytes (ClueWeb09 and ClueWeb12). %contain 500 and 733 million web pages and were clustered into 500,000 to 700,000 clusters. Previous approaches clustered a sample that limits the maximum number of discoverable clusters. 
+The proposed algorithm employed the entire collection for clustering and produced several orders of magnitude more clusters than the existing algorithms. Fine grained clustering is necessary for meaningful clustering in massive collections where the number of distinct topics grows linearly with collection size. Fine-grained clusters showed an improved cluster quality when assessed with two novel evaluations using ad-hoc search relevance judgments and Spam classifications for external validation. These evaluations solved the problem of assessing the quality of clusters where categorical labeling was unavailable.
 
 \subsection{Distributed approaches for clustering based on density estimators}\label{sec:sa_dens}
 
 \citep{KLM03} proposed a novel distributed clustering algorithm based on non-parametric kernel density estimation, which took into account the issues of privacy and communication costs in a low dimensional distributed data environment. %They state that several approaches to knowledge discovery and data mining, and in particular to clustering, have been developed, but only a few of them are designed for distributed data sources. 
+
 \citep{JKP04} presented a scalable version of \textit{DBSCAN} that was also capable of operating over distributed collections. First, the best local representatives were selected depending on the number of points that each one represented and then those chosen points were sent to a central node. The central node clustered the local representatives into a single new model which was transmitted back to the other nodes to improve their local group structure. Unfortunately,
 only experiments performed over low dimensional data were reported.
 
@@ -147,9 +154,9 @@ The authors demonstrated that even for relatively small problem sizes, it can be
 
 %\citep{ZLW08} propose an approximate K-Median clustering technique that works over streaming data, i.e. data is continuously collected. They propose a suite of algorithms for computing (1 + $\epsilon$ )-approximate k-median clustering over distributed data streams under three different topology settings: topology-oblivious, height-aware, and path-aware. The proposed algorithms reduce the maximum per node transmission to $polylog N$ (opposed to $\Omega(N)$ for transmitting the raw data). The authors perform simulations on a distributed stream system with both real and synthetic datasets composed of millions of data. In practice, the algorithms are able to reduce the data transmission to a small fraction of the original data. The results indicate that the algorithms are scalable with respect to the data volume, approximation factor, and the number of sites.
 
-\citep{BEL13} provided novel extensions in a distributed scenario for two popular prototype-based strategies, namely k-median and k-means. 
+\citep{BEL13} provided novel extensions in a distributed scenario for two popular prototype-based strategies, namely k-median and K-Means. 
 %These algorithms have provable guarantees and improve communication complexity over existing approaches. 
-The proposed algorithms reduced the problem of finding a clustering with low cost to the problem of finding a coreset of small size. The authors provided a distributed method for constructing a global coreset which represented an interesting improve over the previous methods due to the reduction in terms of the communication complexity. Experimental results on large scale data sets showed that this approach is feasible and competitive against centralized techniques. 
+The proposed algorithms reduced the problem of finding a clustering with low cost to the problem of finding a coreset of small size. The authors provided a distributed method for constructing a global coreset which represented an interesting improve over the previous methods due to the reduction in terms of the communication complexity. Experimental results on large scale datasets showed that this approach is feasible and competitive against centralized techniques. 
 %outperforms other coreset-based distributed clustering algorithms.
 
 %\citep{NC14} tackle the problem of the parameter selection of the K-Means clustering algorithm by using evolutionary algorithms. Two different distribution approaches are adopted: the first obtains a final model identical to the centralized version of the clustering algorithm; the second generates and selects clusters for each distributed data subset and combines them afterwards. The algorithms are compared experimentally from two perspectives: the theoretical one, through asymptotic complexity analyses; and the experimental one, through a comparative evaluation of results obtained from a collection of experiments and statistical tests. The obtained results indicate which variant is more adequate for each application scenario.
@@ -164,7 +171,7 @@ generality of the framework. The results showed that high quality distributed cl
 
 \subsection{Distributed approaches for Hierarchical clustering}
 
-A hierarchical algorithm, called Collective Hierarchical Clustering (CHC), that works on distributed and heterogeneous data was presented by \citep{JK00}.  This algorithm first generated local cluster models and then combined them to generate the global cluster model of the data. The proposed algorithm ran in $O(|S|n^2)$ time, with a $O(|S|n)$ space requirement and $O(n)$ communication requirement, where $n$ is the number of elements in the data set and $|S|$ is the number of data sites. 
+A hierarchical algorithm, called Collective Hierarchical Clustering (CHC), that works on distributed and heterogeneous data was presented by \citep{JK00}.  This algorithm first generated local cluster models and then combined them to generate the global cluster model of the data. The proposed algorithm ran in $O(|S|n^2)$ time, with a $O(|S|n)$ space requirement and $O(n)$ communication requirement, where $n$ is the number of elements in the dataset and $|S|$ is the number of data sites. 
 This approach showed a significant improvement over naive methods with $O(n^2)$ communication costs in the case that the entire distance matrix is transmitted and $O(nm)$ communication costs to centralize the data, where m is the total number of features. A specific implementation based on the single link clustering and results comparing its performance with that of a centralized clustering algorithm were presented. Additionally, an analysis of the algorithm complexity, in terms of overall computation time and communication requirements, was presented.
 
 \citep{JCHAC15} proposed a hierarchical clustering algorithm for distributed data that built the clusters by incrementally processing the data points. The authors re-stated the hierarchical clustering problem as a Minimum Spanning Tree construction problem over a graph. In order to integrate several local models they also proposed a technique for combining multiple Minimum Spanning Trees, assuming that these trees were obtained from disjoint subgraphs of the complete original graph. 
@@ -173,13 +180,21 @@ This mixture procedure iterated until a single tree was obtained, which correspo
 \subsection{Discussion}
 %\subsection{Parallel and distributed approaches for massive and high dimensional data clustering}
 %Hasta donde sabemos, gran parte de los esfuerzos en la literatura para la construcción de técnicas de agrupamiento capaces de operar en entornos donde los datos están distribuídos se ha enfocado en datos con datos cuya dimensionalidad es relativamente baja (menos 100 atributos) en comparación con las colecciones documentales (más de $10^4$ atributos). Sin embargo, a continuación detallamos los principales avances en el área de agrupamiento sobre datos distribuídos, destacando aquellas contribuciones dirigidas a los datos con alta dimensionalidad en sus representaciones computacionales.
-As far as we know from the literature, most of the existing efforts for the construction of clustering techniques capable of operating in scenarios where the data is distributed have been focused on low dimensional data (less than 100 attributes) in contrast with document datasets in which a document vector for a small collection may have about $10^4$ attributes. 
-Nevertheless, some previous works deal with high dimensional and distributed datasets.
-Considering these research lines the proposal presented in this project is related to two of the previously mentioned research trends, namely~\ref{sec:sa_dens} and~\ref{sec:sa_prot}.
+There are several approaches in the literature for the construction of clustering techniques capable of operating in scenarios where the data is distributed. Unfortunately, most of them have been focused on the large number of data points but with low dimensional computational representations (less than 100 attributes) as in the cases of \citep{KLM03} and \citep{JKP04}. This contrasts to large document collections in which a document vector may have about $10^4$ attributes. For instance the RCV1 dataset processed by using the Scikit-learn framework\footnote{\url{http://scikit-learn.org/stable/datasets/rcv1.html}} contained $804414$ documents computationally represented as vectors spanned onto a space of $47236$ terms. Considering 4 Bytes to represent \textit{Float} values and without resorting to any sparse representation, the space required for loading this entire matrix in main memory is about $140$ Gigabytes which is beyond the RAM available in most computers.
+%Following with this example, the number of non zero values of all these vectors is $60915113$ which aproximately corresponds to a $\%16$ of the total number of entries. Thus the space required for loading this entire matrix in main memory is $$ Bytes.
+
+The increasing storage cost is not the only issue since as dimensionality grows traditional distance measures such as Cosine and Euclidean become more uniform, making clustering more difficult~\citep{ESK03}. Hierarchical and K-Medoids based algorithms, such as \citep{JK00} and \citep{JCHAC15}, are specially affected by this problem. Additionally, algorithms enhanced by the MapReduce framework, such as \citep{EIM11}, address the problem of processing a large number of documents but high dimensionality still affects each node of computation.
+
+Some previous works deal with high dimensional data by using parallel approaches as in the case of \citep{DDGN15}. Besides the reduction in space requirements, the dataset is still limited by the available disk and RAM capacity of a single machine.
+
+Considering the parallel processing improvements for centralized computation and the proposed strategies for distributed data processing made by previous contributions, the proposal presented in this project is related to two of the previously mentioned research trends, namely~\ref{sec:sa_dens} and~\ref{sec:sa_prot}.
 
 
 \section{Proposal}
-A Distributed and Parallel strategy for dealing with high dimensional and massive text data clustering based on the Shared Nearest Neighbors scheme. The proposed framework uses a Master/Slave model of computation in which a master node partitions the dataset and then each slave or worker node processes its assigned chunk of data in order to identify points that represents each group (\textit{Datset partitioning} and \textit{Local model generation} stages in Figure
+We propose a Distributed and Parallel strategy for dealing with high dimensional and massive text data clustering based on the Shared Nearest Neighbors scheme (SNN)~\citep{JP73}\citep{ESK03}. 
+The SNN approach allows to build more robust distance measures for high dimensional data and the density-based scheme such as the one used by \citep{ESK03} allows to find representative points in regions with a non-spheric shape.
+
+The proposed framework uses a Master/Slave model of computation in which a master node partitions the dataset and then each slave or worker node processes its assigned chunk of data in order to identify points that represents each group (\textit{Datset partitioning} and \textit{Local model generation} stages in Figure
 \ref{fig:distributed_clustering}). Then, these selected points are communicated to the Master node in order to build an overall model which is transmitted back to the workers to perform a model refining procedure~ (\textit{Model refining} dotted loop in Figure \ref{fig:distributed_clustering}). This step can be performed several times, after which the group assignments are transmitted from each worker to the Master to generate the final result.
 
 The distributed computation strategy allows to decrease the cost of computing the complete dataset in one node which sometimes is unfeasible (Dataset sizes beyond the primary memory capacity). Furthermore, as each node can incorporate parallel routines (enabled by exploiting multicore processors or GPUs) to accelerate its partial computations the overall time cost of the algorithm is also improved.
@@ -254,7 +269,7 @@ In order to acomplish the goals of this project the following general and specif
 %\item Implementación y Optimización de los Algoritmos Propuestos
 %Los algoritmos propuestos serán implementados en un nuevo lenguaje llamado JULIA (http://www.julialang.org). Desarrollaremos una estrategia compuesta de módulos capaces de ser evaluados e intercambiados independientemente. Durante esta fase de desarrollo, identificamos los siguientes pasos (los cuales pueden ser iterados): a) Construcción de una plataforma general para construir la arquitectura de los prototipos, b) Implementación de diversos escenarios distribuidos, c) Implementación de algoritmos del estado del arte con fines comparativos, d) Implementación de las técnicas de validación, e) Elaboración de soporte para clusters y tecnologías de Cloud Computing tales como MPI, OpenStack y Amazon EC2, con el fin de simular el problema en un ambiente real.
 \item During the development of the algorithm implementations we identified the following steps: (a) Construction of a modular framework adequately general to serve as a basis for the posterior construction of the proposal and its variants\. (b) The implementation and testing of several distributed scenarios (e.g. Balanced and Imbalance load in workers, arrival of new instances and its posterior labeling and the incorporation of concept-drift by introducing new classes to the algorithm).
-(c) Implementation and evaluation of baseline algorithms of the state of the art (e.g. Spark-Kmeans, Spark-DBSCAN and RACHET [\citep{SOGM02}]).%TODO: AGREGAR RACHET AL ESTADO DEL ARTE
+(c) Implementation and evaluation of baseline algorithms of the state of the art (e.g. Spark K-Means, Spark-DBSCAN and RACHET [\citep{SOGM02}]).%TODO: AGREGAR RACHET AL ESTADO DEL ARTE
 
 %\item Diseño de los experimentos y validación de los algoritmos propuestos.
 %Para validar los modelos propuestos, tenemos planificado usar tanto datos “benchmark” conocidos en el área, como datos provenientes de problemas reales de interés regional. Los datos de “benchmark” serán recolectados de sitios web de acceso publico del área de Máquinas de Aprendizaje. En la mayoría de los casos, los conjuntos de datos tienen asociada a cada documento una etiqueta que indica su verdadera clase. A las medidas de evaluación que comparan las etiquetas asignadas por el método de clustering con las verdaderas se les denomina medidas externas. Las medidas externas que usaremos con el fin de validar la propuesta son: Rand Score, Mutual Information, Homogeneity, Completeness y V-Measure. Para aquellos conjuntos de datos que no cuenten con etiquetas verdaderas, se usará la medida interna Silhouette \citep{R87}, la cual cuantifica que tan bien diferenciados están los grupos encontrados por el método bajo evaluación.
@@ -304,7 +319,7 @@ Implementation of the proposed scheme.
     Processing real text data. For the evaluation of clustering algorithms a general practice consists in using datasets employed for classification since these have labeling information, hence external evaluation measures for Clustering can be used. Additionally, some datasets not labeled but large in size, such as GOV2, will be considered. 
     %\item Procedimiento de validación.
 \item %Análisis comparativo.
-    Comparative analysis against state of the art techniques. External and internal measures will be used and the achieved values will be compared against the ones attained by techniques such as DBSCAN and KMeans implemented within the MapReduce framework for distributed computing. 
+    Comparative analysis against state of the art techniques. External and internal measures will be used and the achieved values will be compared against the ones attained by techniques such as DBSCAN and K-Means implemented within the MapReduce framework for distributed computing. 
 
 %(5.1) Generating Synthetic datasets. (5.2) Recollecting synthetic and real datasets. (5.3) Validation Procedure. (5.4) Comparative Analysis.
 \end{enumerate}
@@ -399,12 +414,12 @@ Open access to programming languages such as Julia, Python, Java, C++ and R, and
 
 \bibitem[Bahmani et~al., 2012]{BMVKV12}
 Bahmani, B., Moseley, B., Vattani, A., Kumar, R., and Vassilvitskii, S. (2012).
-\newblock{Scalable K-Means ++}.
+\newblock{Scalable K-Means++}.
 \newblock{\em Proceedings of the VLDB Endowment (PVLDB)}, 5:622--633.
 
 \bibitem[Balcan et~al., 2013]{BEL13}
 Balcan, M.~F., Ehrlich, S., and Liang, Y. (2013).
-\newblock{Distributed k -Means and k -Median Clustering on General
+\newblock{Distributed K-Means and K-Median Clustering on General
   Topologies}.
 \newblock{\em Advances in Neural Information Processing Systems 26 (NIPS
   2013)}, pages 1--9.
@@ -470,7 +485,7 @@ Hubert, L. and Arabie, P. (1985).
 
 \bibitem[Jagannathan et~al., 2005]{JW05}
 Jagannathan, G., and Wright, R. N. (2005).
-\newblock{Privacy-preserving Distributed K-means Clustering over Arbitrarily Partitioned Data}.
+\newblock{Privacy-preserving Distributed K-Means Clustering over Arbitrarily Partitioned Data}.
 \newblock{\em Proceedings of the Eleventh ACM SIGKDD International Conference on Knowledge Discovery in Data Mining}, 593--599.
 
 \bibitem[Januzaj et~al., 2003]{JKP03}
@@ -482,6 +497,12 @@ Januzaj, E., Kriegel, H.-P., and Pfeifle, M. (2003).
 Januzaj, E., Kriegel, H.-P., and Pfeifle, M. (2004).
 \newblock{Scalable Density-Based Distributed Clustering}.
 \newblock pages 231--244.
+
+\bibitem[Jarvis and Patrick, 1973]{JP73}
+Jarvis, R.A. and Patrick, E.A. (1973).
+\newblock{Clustering Using a Similarity Measure Based on Shared Near Neighbors}.
+\newblock{\em IEEE Transactions on Computers}, 22:1025--1034.
+
 
 \bibitem[Jin et~al., 2015]{JCHAC15}
 Jin, C., Chen, Z., Hendrix, W., Agrawal, A., and Choudhary, A. (2015).
@@ -518,7 +539,7 @@ Li, T., Zhu, S., and Ogihara, M. (2003).
 
 \bibitem[Liang et~al., 2013]{LBK13}
 Liang, Y., Balcan, M.-f., and Kanchanapally, V. (2013).
-\newblock{Distributed PCA and k-Means Clustering}.
+\newblock{Distributed PCA and K-Means Clustering}.
 \newblock{\em The Big Learning Workshop in NIPS 2013}, pages 1--8.
 
 \bibitem[Liu et~al., 2012]{LHLX12}
@@ -544,7 +565,7 @@ Nagwani, N. K. (2015).
 
 \bibitem[Naldi and Campello, 2014]{NC14}
 Naldi, M.~C. and Campello, R. J. G.~B. (2014).
-\newblock{Evolutionary k-means for distributed data sets}.
+\newblock{Evolutionary K-Means for distributed data sets}.
 \newblock{\em Neurocomputing}, 127:30--42.
 
 \bibitem[Nayak et~al., 2014]{NMDG14}
