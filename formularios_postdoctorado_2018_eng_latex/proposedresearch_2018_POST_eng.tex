@@ -192,7 +192,7 @@ Considering the parallel processing improvements for centralized computation and
 
 \section{Proposal}
 We propose a Distributed and Parallel strategy for dealing with high dimensional and massive text data clustering based on the Shared Nearest Neighbors scheme (SNN)~\citep{JP73}\citep{ESK03}. 
-We expect that the inspiration in these two centralized approaches succesfully employed allows firstly, to build more robust algorithms for high dimensional data and secondly, to build scalable distributed algorithms based on representative points found in each node.
+We expect that the inspiration in these two succesfully employed centralized approaches allows firstly, to build more robust algorithms for high dimensional data and secondly, to build scalable distributed algorithms based on representative points found in each node.
 
 The proposed framework uses a Master/Slave model of computation in which a master node partitions the dataset and then each slave or worker node processes its assigned chunk of data in order to identify points that represents each group (\textit{Dataset partitioning} and \textit{Local model generation} stages in Figure
 \ref{fig:distributed_clustering}). Then, these selected points are transmitted to the Master node in order to build an overall model which is then transmitted back to the workers to perform a model refining procedure~(\textit{Model refining} dotted loop in Figure \ref{fig:distributed_clustering}). This step can be performed several times, after which the group assignments are transmitted from each worker to the Master to generate the final result.
